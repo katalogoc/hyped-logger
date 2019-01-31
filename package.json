@@ -1,0 +1,27 @@
+{
+  "name": "hyped-logger",
+  "version": "1.0.0",
+  "description": "Winston logger for hyped-text",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'Passed!'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyped-text/logger.git"
+  },
+  "keywords": [
+    "logger",
+    "winston",
+    "util"
+  ],
+  "author": "shonie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hyped-text/logger/issues"
+  },
+  "homepage": "https://github.com/hyped-text/logger#readme",
+  "dependencies": {
+    "winston": "^3.2.1"
+  }
+}
