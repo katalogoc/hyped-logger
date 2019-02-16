@@ -55,4 +55,7 @@ if (process.env.NODE_ENV !== "production") {
 
 winston.addColors(colors);
 
+logger.deep = obj =>
+  logger.info(inspect(obj, { showHidden: false, depth: null }));
+
 module.exports = () => logger;
