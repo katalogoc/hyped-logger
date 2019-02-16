@@ -62,4 +62,6 @@ module.exports = (filename = 'unknown location') => {
   }
 
   addColors(colors);
+
+  return logger;
 };
