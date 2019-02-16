@@ -1,43 +1,50 @@
-const winston = require("winston");
-const { inspect } = require('util');
+const {
+  format,
+  createLogger,
+  transports,
+  addColors,
+  config
+} = require("winston");
+const { inspect } = require("util");
 
 const levels = {
-  ...winston.config.npm.levels,
+  ...config.npm.levels,
   gql: 4
 };
 
 const colors = {
-  ...winston.config.npm.colors,
+  ...config.npm.colors,
   gql: "bold magenta"
 };
 
-const format = winston.format.combine(
-  winston.format.colorize(),
-  winston.format.timestamp(),
-  winston.format.align(),
-  winston.format.printf(info => {
+const fmt = format.combine(
+  format.colorize(),
+  format.timestamp(),
+  format.align(),
+  format.printf(info => {
     const { timestamp, level, message } = info;
 
     const ts = timestamp.slice(0, 19).replace("T", " ");
     return `${ts} [${level}]: ${message}`;
-  })
+  }),
+  format.json()
 );
 
-const logger = winston.createLogger({
+const logger = createLogger({
   levels,
   level: "info",
   transports: [
-    new winston.transports.File({
+    new transports.File({
       colors,
       levels,
-      format,
+      format: fmt,
       filename: "logs/error.log",
       level: "error"
     }),
-    new winston.transports.File({
+    new transports.File({
       colors,
       levels,
-      format,
+      format: fmt,
       filename: "logs/combined.log"
     })
   ]
@@ -45,18 +52,15 @@ const logger = winston.createLogger({
 
 if (process.env.NODE_ENV !== "production") {
   logger.add(
-    new winston.transports.Console({
-      format,
+    new transports.Console({
       colors,
       levels,
+      format: fmt,
       level: "silly"
     })
   );
 }
 
-winston.addColors(colors);
-
-logger.deep = obj =>
-  logger.info(inspect(obj, { showHidden: false, depth: null }));
+addColors(colors);
 
 module.exports = () => logger;
