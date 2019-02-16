@@ -5,8 +5,9 @@ const {
   addColors,
   config
 } = require("winston");
+const { inspect } = require("util");
 
-module.exports = (filename = 'unknown location') => {
+module.exports = () => {
   const levels = {
     ...config.npm.levels,
     gql: 4
@@ -25,9 +26,9 @@ module.exports = (filename = 'unknown location') => {
       const { timestamp, level, message } = info;
 
       const ts = timestamp.slice(0, 19).replace("T", " ");
-      return `${ts} [${level}][${filename}]: ${message}`;
-    }),
-    format.json()
+
+      return `${ts} [${level}]: ${message})`;
+    })
   );
 
   const logger = createLogger({
@@ -62,6 +63,8 @@ module.exports = (filename = 'unknown location') => {
   }
 
   addColors(colors);
+
+  logger.deep = (msg) => inspect(msg, false, null);
 
   return logger;
 };
