@@ -1,4 +1,5 @@
 const winston = require("winston");
+const { inspect } = require('util');
 
 const levels = {
   ...winston.config.npm.levels,
