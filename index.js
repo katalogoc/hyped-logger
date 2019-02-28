@@ -27,7 +27,7 @@ module.exports = () => {
 
       const ts = timestamp.slice(0, 19).replace("T", " ");
 
-      return `${ts} [${level}]: ${message})`;
+      return `${ts} [${level}]: ${message}`;
     })
   );
 
@@ -64,7 +64,7 @@ module.exports = () => {
 
   addColors(colors);
 
-  logger.deep = (msg) => inspect(msg, false, null);
+  logger.deep = msg => inspect(msg, false, null);
 
   return logger;
 };
